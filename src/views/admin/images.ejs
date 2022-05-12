@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link
+            rel="stylesheet"
+            href="/public/css/themes/datatable/datatables.min.css"
+        />
+        <link rel="stylesheet" href="/public/css/dashboard.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+            integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <%- include('./includes/aside.ejs', {page: 'images'})%>
+        <main class="main">
+            <%- include('./includes/header.ejs')%>
+            <section class="main-box table-container">
+                <header class="top-header">
+                    <h1>Images</h1>
+                    <a href="/admin/images/new" class="btn">New Image</a>
+                </header>
+                <% if(successMessage.length) { %>
+                <div class="alert alert-success" role="alert">
+                    <p><%= successMessage %></p>
+                    <button type="button" class="alert-close">
+                        <span class="fas fa-times"></span>
+                    </button>
+                </div>
+                <%} else if(errorMessage.length) {%>
+                <div class="alert alert-warning" role="alert">
+                    <p><%= errorMessage %></p>
+                    <button type="button" class="alert-close">
+                        <span class="fas fa-times"></span>
+                    </button>
+                </div>
+                <%}%>
+                <table
+                    id="table"
+                    class="table display cell-border"
+                    style="width: 100%"
+                >
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let num = 1 %> <%for(image of images){%>
+                        <tr>
+                            <td><%= num%></td>
+                            <td>
+                                <img src="/public/images/post/<%= image.image%>" alt="<%=image.title%>" />
+                            </td>
+                            <td>
+                                <p><%=image.title%></p>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="/admin/images/delete/<%=image.id%>" class="delete">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                    <a href ="/admin/images/edit/<%=image.id%>" class="edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <input
+                                        type="hidden"
+                                        value="<img src='/public/images/post/<%= image.image%>' alt='<%= image.title%>'>"
+                                        class="hiddenInput"
+                                    />
+                                        <button
+                                            type="button"
+                                            href="#"
+                                            class="copy"
+                                        >
+                                            <i class="fas fa-clipboard" ></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <% num++ %> <%}%>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+        <script src="/public/js/themes/jquery/jquery-3.5.1.slim.min.js"></script>
+        <script src="/public/js/themes/datatable/datatables.min.js"></script>
+        <script src="/public/js/dashboard.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#table").DataTable({
+                    responsive: true,
+                    columnDefs: [
+                        { width: "10%", targets: 0 },
+                        { width: "20%", targets: 1 },
+                        { width: "60%", targets: 2 },
+                    ],
+                });
+            });
+        </script>
+    </body>
+</html>

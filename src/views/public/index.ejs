@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= homePage.title %></title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/images/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/public/images/favicon/site.webmanifest">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <link rel="stylesheet" href="/public/css/blog.css">
+    <meta property="title" content="<%= homePage.title %>"/>
+    <meta property="og:title" content="<%= homePage.title %>"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= homePage.url %>" />
+    <meta property="og:image" content="<%= homePage.logoImageUrl %>"/>
+    <meta property="twitter:title" content="<%= homePage.title %>"/>
+    <meta name="description" content="<%= homePage.description %>"/>
+    <link rel="canonical" href="<%= homePage.url %>" />
+    <link rel="next" href="<%= homePage.nextPageUrl %>" />
+    <meta name="robots" content="index, follow">
+    <meta property="og:description" content="<%= homePage.description %>"/>
+    <meta property="twitter:description" content="<%= homePage.description %>"/>
+    <meta property="og:site_name" content="<%= homePage.siteName %>" />
+</head>
+<body> 
+    <body>
+        <%- include('./includes/header.ejs')%>
+        <%- include('./includes/nav.ejs')%>
+        <% if(page === "home" || page === "page")  {%>
+    <section class="top-post">
+        <div class="container">
+            <a href="/posts/<%= currentPost.slug %>" class="left-box">
+                <img src="/public/images/post/<%= currentPost.image %>" alt="<%= currentPost.title %>">
+            </a>
+            <div class="right-box">
+                <a href="/posts/<%= currentPost.slug %>" class="title-link">
+                    <h1 class="title"><%= currentPost.title %></h1>
+                </a>
+                <p class="description"><%- currentPost.description %></p>
+                <a href="/posts/<%= currentPost.slug %>" class="link-btn btn">read more</a>
+            </div>
+        </div>
+     </section>
+     <section class="popular-posts">
+         <div class="container">
+             <h1 class="visually hidden">Popular posts</h1>
+             <ul class="post-list">
+                 <% for(post of popularPosts) { %>
+                 <li class="post-item">
+                     <a href="/posts/<%= post.slug %>" class="post-image-link">
+                         <img src="/public/images/post/<%= post.image %>" alt="<%= post.title %>" class="post-image">
+                     </a>
+                     <a href="/posts/<%= post.slug %>" class="post-title-link">
+                         <h2 class="post-title"><%= post.title %></h2>
+                     </a>
+                 </li>
+                 <% } %>
+             </ul>
+         </div>
+     </section>
+     <%}%>
+     <main class="main">
+         <div class="container">
+             <section class="blog">
+                <% if(page === "category")  {%>
+                    <h1 class="blog-title"><%= categoryName %></h1>
+                <% } else if(page === "search") {%>
+                    <h1 class="blog-title">search Results for: "<%= title %>"</h1>
+                <% } else {%>
+                 <h1 class="blog-title visually-hidden">The most recent blog posts</h1>
+                <%}%> 
+                 <% if(page === "home")  {%>
+                    <% for(post of mainPosts) {%> 
+                        <article class="blog-post">
+                            <a href="/posts/<%=post.slug%>" class="image-link">
+                                <img src="/public/images/post/<%=post.image%>" class="post-image" alt="<%=post.title%>">
+                            </a>
+                            <div class="post-container">
+                                <a href="/posts/<%=post.slug%>" class="title-link">
+                                   <h2 class="post-title"><%=post.title%></h2>
+                                </a>
+                                <p class="post-description"><%=post.description%></p>
+                                <a href="/posts/<%=post.slug%>" class="post-link btn">read more</a>
+                            </div>
+                        </article>
+                    <% } %> 
+                 <% }%>
+                 <% if(page === "page" || page === "category" || page === "search")  {%>
+                    <% for(post of posts) {%> 
+                        <article class="blog-post">
+                            <a href="/posts/<%=post.slug%>" class="image-link">
+                                <img src="/public/images/post/<%=post.image%>" class="post-image" alt="<%=post.title%>">
+                            </a>
+                            <div class="post-container">
+                                <a href="/posts/<%=post.slug%>" class="title-link">
+                                   <h2 class="post-title"><%=post.title%></h2>
+                                </a>
+                                <p class="post-description"><%=post.description%></p>
+                                <a href="/posts/<%=post.slug%>" class="post-link btn">read more</a>
+                            </div>
+                        </article>
+                    <% } %> 
+                 <% }%>
+                 <div class="pagination">
+                    <ul class="pagination-list">
+                        <% if(page === "home"){ if(totalPages > 6){%>
+                        <%for(let i = 1; i <= 4; i++){%>
+                            <% if(i === 1){%>
+                                <li class="pagination-item">
+                                    <p class="pagination-link active"><%=i%></p>
+                                </li> 
+                            <% } else { %>
+                            <li class="pagination-item">
+                                <a href="/page/<%=i%>" class="pagination-link"><%=i%></a>
+                            </li>
+                            <%}%>
+                        <%}%>
+                        <li class="pagination-item">
+                            <p class="pagination-link-disabled">...</p>
+                        </li>
+                        <li class="pagination-item">
+                            <a href="/page/2" class="pagination-link next">
+                                <span class="fas fa-chevron-right"></span>
+                            </a>
+                        </li>
+                        <%} else {%>
+                            <%for(let i = 1; i <= totalPages; i++) {%>
+                                <% if(i === 1) {%>
+                                    <li class="pagination-item">
+                                        <p class="pagination-link active"><%=i%></p>
+                                    </li> 
+                                <% } else { %>
+                                <li class="pagination-item">
+                                    <a href="/page/<%=i%>" class="pagination-link"><%=i%></a>
+                                </li>
+                        <%} }%>
+                        <li class="pagination-item">
+                            <a href="/page/2" class="pagination-link next">
+                                <span class="fas fa-chevron-right"></span>
+                            </a>
+                        </li>
+                    <%} }else if(page === "page") {%>
+                        <%if(pageNumber !== 1) {%>
+                                    <li class="pagination-item">
+                                        <a href="/page/<%= pageNumber - 1%>" class="pagination-link prev">
+                                            <span class="fas fa-chevron-left"></span>
+                                        </a>
+                                    </li>
+                        <%}%>
+                        <% let i = (pageNumber > 5 ? pageNumber - 4 : 1) %>
+                        <% if (i !== 1) { %>
+                            <li class="pagination-item">
+                                <p class="pagination-link-disabled">...</p>
+                            </li>
+                        <% } %>
+                        <% for (; i <= (pageNumber + 4) && i <= totalPages; i++) { %>
+                            <% if (i == pageNumber) { %>
+                                <li class="pagination-item">
+                                    <a href="/page/<%=i%>" class="pagination-link active"><%=i%></a>
+                                </li>
+                            <%} else {%>
+                                <li class="pagination-item">
+                                    <a href="/page/<%=i%>" class="pagination-link"><%=i%></a>
+                                </li> 
+                            <%}%> 
+                            <% if (i == pageNumber + 4 && i < totalPages) { %>
+                                <li class="pagination-item">
+                                    <p class="pagination-link-disabled">...</p>
+                                </li>
+                            <% } %>
+                            <%}%>
+                            <% if(pageNumber !== totalPages) {%>
+                                <li class="pagination-item">
+                                    <a href="/page/<%= pageNumber + 1%>" class="pagination-link next">
+                                        <span class="fas fa-chevron-right"></span>
+                                    </a>
+                                </li>
+                            <% } %>  
+                        <%}%>
+                        
+                        
+                        
+                    </ul>
+                </div>
+             </section>
+             <%- include('./includes/aside.ejs')%>
+         </div>
+     </main>
+     <%- include('./includes/footer.ejs')%>
+     
+     <script src="/public/js/main.js"></script>
+     
+</body>
+
+</html>
+

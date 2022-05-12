@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="/public/css/dashboard.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+            integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <%- include('./includes/aside.ejs', {page: 'editImages'})%>
+        <main class="main">
+            <%- include('./includes/header.ejs')%>
+            <section class="main-box">
+                <header class="top-header">
+                    <h1>Edit Image</h1>
+                    <a href="/admin/images" class="btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Back</a
+                    >
+                </header>
+                <% if(successMessage.length) { %>
+                <div class="alert alert-success" role="alert">
+                    <p><%= successMessage %></p>
+                    <button type="button" class="alert-close">
+                        <span class="fas fa-times"></span>
+                    </button>
+                </div>
+                <%} else if(errorMessage.length) {%>
+                <div class="alert alert-warning" role="alert">
+                    <p><%= errorMessage %></p>
+                    <button type="button" class="alert-close">
+                        <span class="fas fa-times"></span>
+                    </button>
+                </div>
+                <%}%>
+                <div class="form-box">
+                    <form action="/admin/images/edit/<%=image.id%>" method="post" enctype="multipart/form-data">
+                        <label>
+                            <p>Title:</p>
+                            <input
+                                value="<%= image.title%>"
+                                type="text"
+                                name="title"
+                                class="title"
+                                placeholder="Image title..."
+                                autocomplete="off"
+                            />
+                        </label>
+                        <label class="file">
+                            <p>Image:</p>
+                            <img src="/public/images/post/<%= image.image%>" alt="some title" />
+                            <input
+                                class="file-input"
+                                name="image"
+                                type="file"
+                                id="file"
+                                aria-label="File browser example"
+                            />
+                            <span class="file-custom"></span>
+                        </label>
+                        <button type="submit" class="btn form-submit">Edit</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+        <script src="/public/js/dashboard.js"></script>
+    </body>
+</html>
