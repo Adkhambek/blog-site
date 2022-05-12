@@ -9,7 +9,7 @@ RETURNING id, name`;
 
 const ALL_CATEGORIES = `
 SELECT id, name FROM categories
-ORDER BY id DESC
+ORDER BY id
 `;
 
 const CATEGORY_BY_ID = `

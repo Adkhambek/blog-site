@@ -1,7 +1,7 @@
 const { fetch, fetchAll } = require("./");
 const date = new Date();
 
-const CREATE_POST = `
+const CREATE_POST = ` 
 INSERT INTO 
 posts(title, slug, image, content, category_id, created_at, updated_at) 
 VALUES($1, $2, $3, $4, $5, $6, $7)

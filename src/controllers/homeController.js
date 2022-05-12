@@ -11,7 +11,10 @@ exports.homePage = async (req, res) => {
     const mainPosts = await postModel.mainPosts(limit);
     const totalPosts = Number((await postModel.totalPosts()).count);
     const totalPages = Math.ceil(totalPosts / limit);
-    currentPost.description = truncate(currentPost.content, 150);
+    if (currentPost) {
+        currentPost.description = truncate(currentPost.content, 150);
+    }
+
     mainPosts.map((post) => (post.description = truncate(post.content, 150)));
     res.render("public/index", {
         page: "home",
